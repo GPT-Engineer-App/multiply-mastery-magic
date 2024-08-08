@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 const Index = () => {
   const [selectedTable, setSelectedTable] = useState(2);
+  const [maxNumber, setMaxNumber] = useState(10);
   const [currentQuestion, setCurrentQuestion] = useState({});
   const [userAnswer, setUserAnswer] = useState('');
   const [score, setScore] = useState(0);
@@ -16,11 +17,12 @@ const Index = () => {
   }, [selectedTable]);
 
   const generateQuestion = () => {
-    const multiplicand = Math.floor(Math.random() * 10) + 1;
+    const multiplicand = Math.floor(Math.random() * maxNumber) + 1;
+    const multiplier = Math.floor(Math.random() * maxNumber) + 1;
     setCurrentQuestion({
       multiplicand,
-      multiplier: selectedTable,
-      answer: multiplicand * selectedTable
+      multiplier,
+      answer: multiplicand * multiplier
     });
   };
 
@@ -40,13 +42,13 @@ const Index = () => {
         <h1 className="text-3xl font-bold mb-6 text-center">Multiplication Quiz</h1>
         
         <div className="mb-4">
-          <Label htmlFor="table-select">Select Multiplication Table</Label>
-          <Select onValueChange={(value) => setSelectedTable(parseInt(value))} defaultValue="2">
+          <Label htmlFor="max-number">Maximum Number</Label>
+          <Select onValueChange={(value) => setMaxNumber(parseInt(value))} defaultValue="10">
             <SelectTrigger>
-              <SelectValue placeholder="Select a table" />
+              <SelectValue placeholder="Select maximum number" />
             </SelectTrigger>
             <SelectContent>
-              {[2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+              {[10, 12, 15, 20].map((num) => (
                 <SelectItem key={num} value={num.toString()}>{num}</SelectItem>
               ))}
             </SelectContent>
